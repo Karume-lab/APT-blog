@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    
+    {% include "dependancies/css.html" %}
+
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          {% block body %}
+          {% block content %}
+          {% endblock %}
+          {% endblock %}
+          {% block extra_body %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
