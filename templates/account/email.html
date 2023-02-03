@@ -1,4 +1,5 @@
 {% extends "account/base.html" %}
+{% load crispy_forms_tags %}
 
 {% load i18n %}
 
@@ -11,6 +12,7 @@
 
 <form action="{% url 'account_email' %}" class="email_list" method="post">
 {% csrf_token %}
+
 <fieldset class="blockLabels">
 
   {% for emailaddress in user.emailaddress_set.all %}
@@ -31,9 +33,9 @@
   {% endfor %}
 
 <div class="buttonHolder">
-      <button class="secondaryAction" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
-      <button class="secondaryAction" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
-      <button class="primaryAction" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+      <button class="btn btn-success secondaryAction" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="btn btn-success secondaryAction" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="btn btn-danger primaryAction my-2" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
 </div>
 
 </fieldset>
@@ -49,8 +51,8 @@
 
     <form method="post" action="{% url 'account_email' %}" class="add_email">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+        {{ form | crispy }}
+        <button class="btn btn-success my-2" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
     </form>
   {% endif %}
 
