@@ -144,6 +144,38 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #verify email during signing up
 LOGIN_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#mail configuration 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.vstech.co.ke'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apt@vstech.co.ke'
+EMAIL_HOST_PASSWORD = 'Apt12345@12345'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'apt@vstech.co.ke'
+
+#customizing the email sent subject to something else (Removing [APT])
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'APT - '
+
+#removing case sensitivity
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+
+#making email not optional
+ACCOUNT_EMAIL_REQUIRED = True
+
+
+#more configurations
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+# ACCOUNT_USERNAME_MIN_LENGTH = 8
+
+
+#allowing usernames and emails as authentication for login
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
