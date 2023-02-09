@@ -9,9 +9,9 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="{% url 'dashboard' %}">Dashboard</a></li>
-          <li><a class="active" href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+          <li><a class="active" href="{% url 'core:index' %}">Home</a></li>
+          <li><a href="{% url 'core:about' %}">About</a></li>
           <li><a href="courses.html">Courses</a></li>
           <li><a href="trainers.html">Trainers</a></li>
           <li><a href="events.html">Events</a></li>
@@ -34,7 +34,7 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'core:contact' %}">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
