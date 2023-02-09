@@ -9,7 +9,9 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'users:dashboard' %}">Dashboard</a></li>
+          {% endif %}
           <li><a class="active" href="{% url 'core:index' %}">Home</a></li>
           <li><a href="{% url 'core:about' %}">About</a></li>
           <li><a href="courses.html">Courses</a></li>
