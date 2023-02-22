@@ -3,12 +3,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic import View
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from core.decorator import cls_login_required
 
 class DashboardView(TemplateView, LoginRequiredMixin):
     template_name = 'dashboard/pages/index.html'
     
 class ProfileView(View):
     template_name = 'dashboard/pages/users-profile.html'
+    
+    @method_decorator(cls_login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     # Fixing method not allowed (ERROR 405)
     def get(self, request):
