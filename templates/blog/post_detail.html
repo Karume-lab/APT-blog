@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -16,17 +17,32 @@
             <div class="row">
                 {{blogs}}
                     <ul>
-                        <li> Title: <a href="{% url 'blog:post_details' post.slug post.created.year post.created.month post.created.day %}" >{{post}}</a>
+                        <li> Title: <a href="{{post.get_absolute_url}}" >{{post}}</a>
                         <li> Author: {{post.author}}</li>
                         <li> Created: {{post.created}}</li>
                         <li> Updated: {{post.updated}}</li>
                         <li> Published: {{post.published}}</li>
                         <p> Body: {{post.body}}</p>
+                    </ul>
                     <div class="col-md-4">
                         <div class="card card-body">
                             {{post}}
                         </div>
                     </div>
+                    <div>
+                        <ul>
+                            {% for comment in post.comments.all %}
+                            <li>{{comment}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    </div>
+                    <form method=POST>
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
             </div>
         </div>
     </section>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 class Post(models.Model):
@@ -10,6 +11,9 @@ class Post(models.Model):
     published = models.DateTimeField(default=timezone.now)
     body = models.TextField()
     slug = models.SlugField(db_index=True)
+    
+    def get_absolute_url(self):
+        return reverse("blog:post_detail", args = [self.slug, self.created.year, self.created.month, self.created.day])
     
     def __str__(self):
         return (self.title)
