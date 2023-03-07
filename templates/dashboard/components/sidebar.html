@@ -95,18 +95,18 @@
       </a>
       <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="forms-elements.html">
+          <a href="{% url 'blog:my_posts' %}">
             <i class="bi bi-circle"></i><span>All</span>
           </a>
         </li>
         <li>
-          <a href="forms-layouts.html">
-            <i class="bi bi-circle"></i><span>Draft</span>
+          <a href="{% url 'blog:my_posts' 'published' %}">
+            <i class="bi bi-circle"></i><span>Published</span>
           </a>
         </li>
         <li>
-          <a href="forms-editors.html">
-            <i class="bi bi-circle"></i><span>Published</span>
+          <a href="{% url 'blog:my_posts' 'draft' %}">
+            <i class="bi bi-circle"></i><span>Draft</span>
           </a>
         </li>
         <li>

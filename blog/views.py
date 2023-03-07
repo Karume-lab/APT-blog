@@ -3,6 +3,8 @@ from django.urls import reverse
 from .models import Post
 from django.views.generic import ListView, DetailView
 from .forms import CommentForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
 
 def post_list(request):
     posts = Post.objects.filter(status = "P")
@@ -55,7 +57,8 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context = {
-            "form": CommentForm()
+            "form": CommentForm(),
+            "post": self.get_object(),
         }
         return context
     
@@ -63,3 +66,15 @@ class PostDetail(DetailView):
 
 class CommentView(ListView):
     template_name = "blog/comment.html"
+    
+class MyPosts(LoginRequiredMixin, View):
+    template_name = "blog/myposts.html"
+    
+    def get(self, request, status=None):
+        posts = Post.objects.filter(author=request.user)
+        if status:
+            posts = posts.filter(status=status[0].upper())
+        context = {
+            "posts":posts,
+        }
+        return render (request, self.template_name, context)
