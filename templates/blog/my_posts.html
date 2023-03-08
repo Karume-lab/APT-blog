@@ -9,13 +9,6 @@
 
     <div class="pagetitle">
       <h1>My Posts</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">General</li>
-        </ol>
-      </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -24,7 +17,6 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Default Table</h5>
 
               <!-- Default Table -->
               <table class="table">
@@ -43,7 +35,7 @@
                     {% for post in posts%}
                         <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{post.title}}</td>
+                        <td><a href="{{post.get_absolute_url}}">{{post.title}}</a></td>
                         <td>
                             {% if post.status == 'P'%}
                                 <span>Published</span>

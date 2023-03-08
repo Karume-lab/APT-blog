@@ -1,3 +1,4 @@
+from django.utils.text import slugify
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from .models import Post
@@ -5,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+from .forms import AddPostForm
 
 def post_list(request):
     posts = Post.objects.filter(status = "P")
@@ -74,3 +76,23 @@ class MyPosts(LoginRequiredMixin, View):
             "posts":posts,
         }
         return render (request, self.template_name, context)
+    
+class AddPosts(LoginRequiredMixin, View):
+    template_name = "blog/add_post.html"
+    
+    def get(self, request):
+        form = AddPostForm()
+        context = {
+            "form":form,
+        }
+        return render (request, self.template_name, context)
+        
+    def post(self, request):
+        form = AddPostForm(data=request.POST)
+        
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.slug = slugify(form.cleaned_data.get("title"))
+            new_post.save()
+        return redirect(reverse("blog:my_posts"))

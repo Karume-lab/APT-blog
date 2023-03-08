@@ -23,7 +23,12 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src=" {% if request.user.profile.image %} {{request.user.profile.image.url}} {% else %} {% static 'dashboard/assets/img/profile-img.jpg' %} {% endif %} " alt="Profile" class="rounded-circle">
+              {% if request.user.profile.image %}
+                <img src=" {{request.user.profile.image.url}}" alt="Profile" class="rounded-circle">
+              {% else %}
+                <img src="{% static 'dashboard/assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+              {% endif %}
+
               <h2>{{request.user.get_full_name}}</h2>
               <h3>Web Designer</h3>
               <div class="social-links mt-2">
