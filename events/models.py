@@ -12,7 +12,7 @@ class Event(models.Model):
     venue = models.CharField(max_length=255, blank=True, null=True)
     link = models.URLField(max_length=100, blank=True, null=True)
     date = models.DateField()
-    published = models.DateTimeField(auto_now=True, auto_now_add=False)
+    published = models.DateTimeField(auto_now=True)
     slug = models.SlugField(db_index=True)
     
     def get_absolute_url(self):
