@@ -51,6 +51,8 @@ class PostDetail(DetailView):
                                                created__year=year, 
                                                created__month=month, 
                                                created__day=day)
+            new_comment.save()
+            
         return redirect(reverse("blog:post_detail", args = [post_slug, year, month, day]))
     
                                 
@@ -61,14 +63,8 @@ class PostDetail(DetailView):
             "post": self.get_object(),
         }
         return context
-    
-    
-
-class CommentView(ListView):
-    template_name = "blog/comment.html"
-    
 class MyPosts(LoginRequiredMixin, View):
-    template_name = "blog/myposts.html"
+    template_name = "blog/my_posts.html"
     
     def get(self, request, status=None):
         posts = Post.objects.filter(author=request.user)
