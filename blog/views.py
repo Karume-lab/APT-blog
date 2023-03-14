@@ -44,7 +44,6 @@ class PostDetail(DetailView):
     
     def post(self, request,post_slug, year, month, day):
         form = CommentForm(data=request.POST)
-        
         if form.is_valid():
             new_comment=form.save(commit=False)
             new_comment.author = request.user
@@ -87,12 +86,45 @@ class AddPosts(LoginRequiredMixin, View):
         }
         return render (request, self.template_name, context)
         
-    def post(self, request):
+    def post(self, request, slug, year, month, day):
         form = AddPostForm(data=request.POST)
         
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.slug = slugify(form.cleaned_data.get("title"))
+            if form.cleaned_data.get("status") == 'D':
+                new_post.published = None
             new_post.save()
+        return redirect(reverse("blog:my_posts"))
+    
+class EditPost(LoginRequiredMixin, View):
+    template_name = "blog/edit_post.html"
+    
+    def get(self, request, slug, year, month, day):
+        post = get_object_or_404(Post, slug=slug,
+                                 created__year=year,
+                                 created__month=month,
+                                 created__day=day)
+        data = {
+            "title" : post.title,
+            "status" : post.status,
+            "body" : post.body,
+        }
+        form = AddPostForm(data=data)
+        context = {
+            "form":form,
+        }
+        return render (request, self.template_name, context)
+        
+    def post(self, request, slug, year, month, day):
+        post = get_object_or_404(
+                            Post, slug=slug,
+                            created__year=year,
+                            created__month=month,
+                            created__day=day)
+        form = AddPostForm(data=request.POST)
+        
+        if form.is_valid():
+            form.save(commit=False)
         return redirect(reverse("blog:my_posts"))

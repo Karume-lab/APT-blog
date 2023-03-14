@@ -28,7 +28,7 @@
                     <th scope="col">Comments</th>
                     <th scope="col">Created</th>
                     <th scope="col">Published</th>
-                    <th scope="col">Updated</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -38,15 +38,22 @@
                         <td><a href="{{post.get_absolute_url}}">{{post.title}}</a></td>
                         <td>
                             {% if post.status == 'P'%}
-                                <span>Published</span>
+                                <span class="badge bg-success">Published</span>
                             {% else %}
-                                <span>Draft</span>
+                                <span class="badge bg-warning">Draft</span>
                             {% endif%} 
                         </td>
                         <td align="center">{{post.comments.all.count}}</td>
                         <td>{{post.created}}</td>
                         <td>{{post.published}}</td>
-                        <td>{{post.updated}}</td>
+                        <td>
+                          <a href="{% url 'blog:edit_post' post.slug post.created.year post.created.month post.created.day   %}">
+                            <button class="btn btn-primary">Edit</button>
+                          </a>
+                          {% comment %} <a href="{% url 'blog:delete_post' %}">
+                            <button class="btn btn-warning">Delete</button> {% endcomment %}
+                          </a>
+                        </td>
                         </tr>
                     {% endfor %}
                 </tbody>

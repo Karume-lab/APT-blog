@@ -8,8 +8,9 @@ class Post(models.Model):
     status = models.CharField(choices=(("P", "published"), ("D", "draft")), max_length=1)
     created = models.DateTimeField(auto_now = True)
     updated = models.DateTimeField(auto_now_add = True)
-    published = models.DateTimeField(default=timezone.now)
+    published = models.DateTimeField(default=timezone.now, blank=True, null=True)
     body = models.TextField()
+    image = models.ImageField(upload_to='blog/', null=True, blank=True)
     slug = models.SlugField(db_index=True)
     
     def get_absolute_url(self):
